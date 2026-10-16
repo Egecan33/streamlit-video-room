@@ -20,7 +20,9 @@ def get_room_from_query():
 
 def check_password(password_input: str) -> bool:
     """Compare the SHA-256 of the supplied password with env var."""
-    stored = os.getenv(ROOM_PASSWORD_ENV, "change-me-now")
+    stored = os.getenv(ROOM_PASSWORD_ENV)
+    if not stored:
+        return False
     return (
         hashlib.sha256(password_input.encode()).hexdigest()
         == hashlib.sha256(stored.encode()).hexdigest()
